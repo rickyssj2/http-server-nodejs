@@ -5,7 +5,10 @@ const server = net.createServer((socket) => {
         const req = data.toString()
         if (req.startsWith('GET / ')) {
             socket.write("HTTP/1.1 200 OK\r\n\r\n")
-        } else {
+        } else if (req.split('/')[1] == 'echo') {
+            socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${req.split('/')[2].split(' ')[0].length}\r\n\r\n${req.split('/')[2].split(' ')[0]}`)
+        } 
+        else {
             socket.write('HTTP/1.1 404 Not Found\r\n\r\n')
         }
         socket.end();
