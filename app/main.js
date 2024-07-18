@@ -21,8 +21,8 @@ const server = net.createServer((socket) => {
                     socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${value.length}\r\n\r\n${value}`)
                 }
             });
-        }  else if(startLine.startsWith("/files/")){
-            const filePath = startLine.slice(7);
+        }  else if(resourcePath.startsWith("/files/")){
+            const filePath = resourcePath.slice(7);
             if(!fs.existsSync(directory + filePath)){
                 socket.write("HTTP/1.1 404 Not Found\r\n\r\n");
                 socket.end();
